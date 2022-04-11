@@ -29,11 +29,13 @@ namespace ControleMedicamentos.ConsoleApp.Compartilhado
             repositorioFuncionario = new RepositorioFuncionario();
             telaCadastroFuncionario = new TelaCadastroFuncionario(repositorioFuncionario, notificador);
 
-            repositorioRemedio = new RepositorioRemedio();
-            telaCadastroRemedio = new TelaCadastroRemedio(repositorioRemedio, notificador);
-
-            repositorioFornecedor = new RepositorioFornecedor();
+  repositorioFornecedor = new RepositorioFornecedor();
             telaCadastroFornecedor = new TelaCadastroFornecedor(repositorioFornecedor, notificador);
+
+            repositorioRemedio = new RepositorioRemedio();
+            telaCadastroRemedio = new TelaCadastroRemedio(repositorioRemedio, notificador, telaCadastroFornecedor);
+
+          
 
             repositorioPaciente = new RepositorioPaciente();
             telaCadastroPaciente = new TelaCadastroPaciente(repositorioPaciente, notificador);

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ControleMedicamentos.ConsoleApp.Compartilhado;
+using ControleMedicamentos.ConsoleApp.ModuloFornecedor;
 
 namespace ControleMedicamentos.ConsoleApp.ModuloRemedio
 {
@@ -13,15 +14,16 @@ namespace ControleMedicamentos.ConsoleApp.ModuloRemedio
         private readonly RepositorioRemedio _repositorioRemedio;
         private readonly Notificador _notificador;
         private int quantidade;
-
+        private readonly TelaCadastroFornecedor _telaCadastroFornecedor;
         public RepositorioRemedio RepositorioRemedio => _repositorioRemedio;
 
 
-        public TelaCadastroRemedio(RepositorioRemedio repositorioRemedio, Notificador notificador)
+        public TelaCadastroRemedio(RepositorioRemedio repositorioRemedio, Notificador notificador, TelaCadastroFornecedor telaCadastroFornecedor)
             : base("Cadastro de remedios")
         {
             _repositorioRemedio = repositorioRemedio;
             _notificador = notificador;
+            _telaCadastroFornecedor = telaCadastroFornecedor;
         }
 
         public override string MostrarOpcoes()
@@ -34,7 +36,7 @@ namespace ControleMedicamentos.ConsoleApp.ModuloRemedio
             Console.WriteLine("Digite 4 para Visualizar");
             Console.WriteLine("Digite 5 para Visualizar os em falta");
             Console.WriteLine("Digite 6 para Visualizar os com baixa quantidade");
-
+            Console.WriteLine("Digite 7 para Solicitar reposição");
             Console.WriteLine("Digite s para sair");
 
             string opcao = Console.ReadLine();
@@ -76,6 +78,31 @@ namespace ControleMedicamentos.ConsoleApp.ModuloRemedio
                 _notificador.ApresentarMensagem("Não foi possível editar.", TipoMensagem.Erro);
             else
                 _notificador.ApresentarMensagem("Remedio editado com sucesso!", TipoMensagem.Sucesso);
+        }
+
+        internal void Reposicao()
+        {
+            MostrarTitulo("Repondo Remedio");
+
+            bool temRemediosCadastrados = VisualizarRegistros("Pesquisando");
+
+            if (temRemediosCadastrados == false)
+            {
+                _notificador.ApresentarMensagem("Nenhum remedio cadastrado para editar.", TipoMensagem.Atencao);
+                return;
+            }
+
+            int numeroRemedio = ObterNumeroRegistro() - 1;
+
+
+            _telaCadastroFornecedor.VisualizarRegistros("");
+            int numeroFornecedor = _telaCadastroFornecedor.ObterNumeroRegistro() - 1;
+
+           Fornecedor fornecedor = _telaCadastroFornecedor.RepositorioFornecedor.getFornecedor(numeroFornecedor);
+
+
+            RepositorioRemedio.Reposicao(fornecedor, numeroRemedio);
+            _notificador.ApresentarMensagem("Pedido de reposição feita.", TipoMensagem.Sucesso);
         }
 
         internal void BaixaQuantidade()

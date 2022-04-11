@@ -60,6 +60,9 @@ namespace ControleMedicamentos.ConsoleApp
 
                     else if (opcaoSelecionada == "6")
                         telaCadastravel.BaixaQuantidade();
+
+                    else if (opcaoSelecionada == "7")
+                        telaCadastravel.Reposicao();
                 }
                 if (telaSelecionada is TelaCadastroRequisicao)
                 {

@@ -9,6 +9,8 @@ namespace ControleMedicamentos.ConsoleApp.ModuloFornecedor
         private readonly RepositorioFornecedor _repositorioFornecedor;
         private readonly Notificador _notificador;
 
+        public RepositorioFornecedor RepositorioFornecedor => _repositorioFornecedor;
+
         public TelaCadastroFornecedor(RepositorioFornecedor repositorioFornecedor, Notificador notificador)
             : base("Cadastro de Fornecedores")
         {
@@ -22,7 +24,7 @@ namespace ControleMedicamentos.ConsoleApp.ModuloFornecedor
 
             Fornecedor novoFornecedor = ObterFornecedor();
 
-            _repositorioFornecedor.Inserir(novoFornecedor);
+            RepositorioFornecedor.Inserir(novoFornecedor);
 
             _notificador.ApresentarMensagem("Fornecedor cadastrado com sucesso!", TipoMensagem.Sucesso);
         }
@@ -43,7 +45,7 @@ namespace ControleMedicamentos.ConsoleApp.ModuloFornecedor
 
             Fornecedor fornecedorAtualizado = ObterFornecedor();
 
-            bool conseguiuEditar = _repositorioFornecedor.Editar(numeroFornecedor, fornecedorAtualizado);
+            bool conseguiuEditar = RepositorioFornecedor.Editar(numeroFornecedor, fornecedorAtualizado);
 
             if (!conseguiuEditar)
                 _notificador.ApresentarMensagem("Não foi possível editar.", TipoMensagem.Erro);
@@ -65,7 +67,7 @@ namespace ControleMedicamentos.ConsoleApp.ModuloFornecedor
 
             int numeroFornecedor = ObterNumeroRegistro();
 
-            bool conseguiuExcluir = _repositorioFornecedor.Excluir(numeroFornecedor);
+            bool conseguiuExcluir = RepositorioFornecedor.Excluir(numeroFornecedor);
 
             if (!conseguiuExcluir)
                 _notificador.ApresentarMensagem("Não foi possível excluir.", TipoMensagem.Erro);
@@ -78,7 +80,7 @@ namespace ControleMedicamentos.ConsoleApp.ModuloFornecedor
             if (tipoVisualizacao == "Tela")
                 MostrarTitulo("Visualização de Fornecedores");
 
-            List<Fornecedor> fornecedores = _repositorioFornecedor.SelecionarTodos();
+            List<Fornecedor> fornecedores = RepositorioFornecedor.SelecionarTodos();
 
             if (fornecedores.Count == 0)
             {
@@ -121,10 +123,10 @@ namespace ControleMedicamentos.ConsoleApp.ModuloFornecedor
 
             do
             {
-                Console.Write("Digite o ID do fornecedor que deseja editar: ");
+                Console.Write("Digite o ID do fornecedor que deseja: ");
                 numeroRegistro = Convert.ToInt32(Console.ReadLine());
 
-                numeroRegistroEncontrado = _repositorioFornecedor.ExisteRegistro(numeroRegistro);
+                numeroRegistroEncontrado = RepositorioFornecedor.ExisteRegistro(numeroRegistro);
 
                 if (numeroRegistroEncontrado == false)
                     _notificador.ApresentarMensagem("ID do fornecedor não foi encontrado, digite novamente", TipoMensagem.Atencao);

@@ -27,9 +27,9 @@ namespace ControleMedicamentos.ConsoleApp.ModuloRemedio
             foreach (Remedio remedio in Registros)
             {
                 if (remedio.Quantidade < 5)
-                {
                     Console.WriteLine($"medicação :{remedio.Nome} com a quantidade de {remedio.Quantidade}");
-                }
+                if (remedio.Fornecedor != null)
+                    Console.WriteLine($"medicação :{remedio.Nome} Ja esta com pedido de reposição ao fornecedor");
             }
             Console.ReadKey();
         }
@@ -43,6 +43,11 @@ namespace ControleMedicamentos.ConsoleApp.ModuloRemedio
         public void DiminuirRemedio(int numero)
         {
             Registros[numero].Quantidade -= 1;
+        }
+
+        internal void Reposicao(ModuloFornecedor.Fornecedor fornecedor,int numero)
+        {
+            Registros[numero].Fornecedor = fornecedor;
         }
     }
 
