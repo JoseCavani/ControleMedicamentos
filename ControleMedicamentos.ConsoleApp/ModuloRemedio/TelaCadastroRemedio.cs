@@ -37,6 +37,7 @@ namespace ControleMedicamentos.ConsoleApp.ModuloRemedio
             Console.WriteLine("Digite 5 para Visualizar os em falta");
             Console.WriteLine("Digite 6 para Visualizar os com baixa quantidade");
             Console.WriteLine("Digite 7 para Solicitar reposição");
+            Console.WriteLine("Digite 8 para Atualizar");
             Console.WriteLine("Digite s para sair");
 
             string opcao = Console.ReadLine();
@@ -78,6 +79,31 @@ namespace ControleMedicamentos.ConsoleApp.ModuloRemedio
                 _notificador.ApresentarMensagem("Não foi possível editar.", TipoMensagem.Erro);
             else
                 _notificador.ApresentarMensagem("Remedio editado com sucesso!", TipoMensagem.Sucesso);
+        }
+
+        internal void AtualizarQuantidade()
+        {
+            MostrarTitulo("Atualizando Remedio");
+
+            bool temRemediosCadastrados = VisualizarRegistros("Pesquisando");
+
+            if (temRemediosCadastrados == false)
+            {
+                _notificador.ApresentarMensagem("Nenhum remedio cadastrado para editar.", TipoMensagem.Atencao);
+                return;
+            }
+
+            int numeroRemedio = ObterNumeroRegistro()-1;
+
+
+            do
+            {
+                Console.WriteLine("quantos para adicionar?");
+            } while (!(int.TryParse(Console.ReadLine(), out quantidade)));
+
+            RepositorioRemedio.AtualizarQuantidade(numeroRemedio, quantidade);
+
+            _notificador.ApresentarMensagem("Atualizado com sucesso", TipoMensagem.Sucesso);
         }
 
         internal void Reposicao()

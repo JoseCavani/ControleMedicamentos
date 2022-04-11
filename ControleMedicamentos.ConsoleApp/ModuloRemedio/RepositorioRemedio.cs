@@ -49,6 +49,11 @@ namespace ControleMedicamentos.ConsoleApp.ModuloRemedio
         {
             Registros[numero].Fornecedor = fornecedor;
         }
+
+        internal void AtualizarQuantidade(int numeroRemedio, int quantidade)
+        {
+            Registros[numeroRemedio].Quantidade += quantidade;
+        }
     }
 
 }
