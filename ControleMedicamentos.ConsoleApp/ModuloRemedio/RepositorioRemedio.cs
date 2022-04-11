@@ -19,6 +19,8 @@ namespace ControleMedicamentos.ConsoleApp.ModuloRemedio
                 if (remedio.Quantidade  == 0)
                 {
                     Console.WriteLine($"medicação :{remedio.Nome}");
+                    if (remedio.Fornecedor != null)
+                        Console.WriteLine($"medicação :{remedio.Nome} Ja esta com pedido de reposição ao {remedio.Fornecedor.Nome}");
                 }
             }
         }
@@ -29,7 +31,7 @@ namespace ControleMedicamentos.ConsoleApp.ModuloRemedio
                 if (remedio.Quantidade < 5)
                     Console.WriteLine($"medicação :{remedio.Nome} com a quantidade de {remedio.Quantidade}");
                 if (remedio.Fornecedor != null)
-                    Console.WriteLine($"medicação :{remedio.Nome} Ja esta com pedido de reposição ao fornecedor");
+                    Console.WriteLine($"medicação :{remedio.Nome} Ja esta com pedido de reposição ao {remedio.Fornecedor.Nome}");
             }
             Console.ReadKey();
         }
@@ -53,6 +55,7 @@ namespace ControleMedicamentos.ConsoleApp.ModuloRemedio
         internal void AtualizarQuantidade(int numeroRemedio, int quantidade)
         {
             Registros[numeroRemedio].Quantidade += quantidade;
+            Registros[numeroRemedio].Fornecedor = null;
         }
     }
 

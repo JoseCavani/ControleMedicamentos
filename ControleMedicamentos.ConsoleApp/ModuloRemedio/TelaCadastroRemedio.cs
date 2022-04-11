@@ -121,7 +121,15 @@ namespace ControleMedicamentos.ConsoleApp.ModuloRemedio
             int numeroRemedio = ObterNumeroRegistro() - 1;
 
 
-            _telaCadastroFornecedor.VisualizarRegistros("");
+            bool temFornecedorCadastrados = _telaCadastroFornecedor.VisualizarRegistros("pesquisando");
+
+            if (temFornecedorCadastrados == false)
+            {
+                _notificador.ApresentarMensagem("Nenhum fornecedor", TipoMensagem.Atencao);
+                return;
+            }
+
+
             int numeroFornecedor = _telaCadastroFornecedor.ObterNumeroRegistro() - 1;
 
            Fornecedor fornecedor = _telaCadastroFornecedor.RepositorioFornecedor.getFornecedor(numeroFornecedor);
@@ -219,6 +227,7 @@ namespace ControleMedicamentos.ConsoleApp.ModuloRemedio
         {
             Console.WriteLine("as seguintes medicações estao em falta");
             RepositorioRemedio.emFalta();
+            Console.ReadKey();
         }
     }
 
